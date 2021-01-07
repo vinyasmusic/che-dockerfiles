@@ -1,0 +1,20 @@
+name: auto-update-branch
+on:
+  push:
+    branches:
+      - master
+jobs:
+  autoupdate:
+    name: autoupdate
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: docker://chinthakagodawita/autoupdate-action:v1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DRY_RUN: "false"
+          PR_FILTER: "labelled"
+          PR_LABELS: "autoupdate,keep up-to-date,integration"
+          MERGE_MSG: "Branch was auto-updated via Actions."
+          RETRY_COUNT: "2"
+          RETRY_SLEEP: "60"
+          MERGE_CONFLICT_ACTION: "fail"
